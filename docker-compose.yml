@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  db:
+    container_name: green-park
+    image: mysql:8.0.21
+    platform: linux/x86_64
+    restart: always
+    ports:
+      - 3306:3306
+      - 33060:33060
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: green-park # Adicione esta linha para criar o banco de dados

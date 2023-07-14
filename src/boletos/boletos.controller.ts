@@ -1,6 +1,14 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { BoletosService } from './boletos.service';
 import { Boletos } from './boletos.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('boletos')
 export class BoletosController {
@@ -15,5 +23,13 @@ export class BoletosController {
   @Get()
   async getAll(): Promise<Boletos[]> {
     return await this.boletosService.findAll();
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadCSV(@UploadedFile() file: Express.Multer.File): Promise<void> {
+    console.log(file);
+
+    return await this.boletosService.createFromCSV(file);
   }
 }

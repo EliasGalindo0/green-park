@@ -5,4 +5,5 @@ import { databaseProviders } from './database.proviers';
   providers: [...databaseProviders],
   exports: [...databaseProviders],
 })
+// eslint-disable-next-line prettier/prettier
 export class DatabaseModule { }

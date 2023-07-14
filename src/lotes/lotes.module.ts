@@ -9,4 +9,5 @@ import { lotesProviders } from './lotes.providers';
   controllers: [LotesController],
   providers: [LotesService, ...lotesProviders],
 })
+// eslint-disable-next-line prettier/prettier
 export class LotesModule { }

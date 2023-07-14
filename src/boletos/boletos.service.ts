@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { Boletos } from './boletos.entity';
 import { Lotes } from 'src/lotes/lotes.entity';
+import * as csv from 'csv-parser';
+import { Readable } from 'stream';
 
 @Injectable()
 export class BoletosService {
@@ -37,6 +39,47 @@ export class BoletosService {
       valor,
       linha_digitavel,
       ativo,
+    });
+  }
+
+  async createFromCSV(file: Express.Multer.File): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const results: any[] = [];
+      const stream = Readable.from(file.buffer.toString());
+
+      const csvParserOptions: csv.Options = { separator: ';' };
+
+      const csvParser = csv(csvParserOptions);
+
+      stream
+        .pipe(csvParser)
+        .on('data', (data) => results.push(data))
+        .on('end', async () => {
+          for (const result of results) {
+            const lote = await this.lotesRepository.findByPk(result.unidade);
+
+            console.log(result);
+
+            if (!lote) {
+              throw new NotFoundException(
+                `Lote with ID ${result.unidade} not found`,
+              );
+            }
+
+            await this.boletosRepository.create({
+              nome_sacado: result.nome,
+              id_lote: result.unidade,
+              valor: parseFloat(result.valor),
+              linha_digitavel: result.linha_digitavel,
+              ativo: true,
+            });
+          }
+
+          resolve();
+        })
+        .on('error', (error) => {
+          reject(error);
+        });
     });
   }
 }
