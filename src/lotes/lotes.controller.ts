@@ -3,5 +3,7 @@ import { LotesService } from './lotes.service';
 
 @Controller('lotes')
 export class LotesController {
-  constructor(private readonly lotesService: LotesService) {}
+  constructor(private readonly lotesService: LotesService) { }
+
+  async createLotes(): Promise<void> { }
 }
