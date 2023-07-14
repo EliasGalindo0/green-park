@@ -4,6 +4,7 @@ import { Boletos } from './boletos.entity';
 
 @Controller('boletos')
 export class BoletosController {
+  // eslint-disable-next-line prettier/prettier
   constructor(private readonly boletosService: BoletosService) { }
 
   @Post()
