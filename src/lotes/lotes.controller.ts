@@ -9,11 +9,19 @@ export class LotesController {
 
   @Post()
   async createLotes(@Body() loteInfo: Lotes): Promise<void> {
-    return await this.lotesService.create(loteInfo);
+    try {
+      return await this.lotesService.create(loteInfo);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   @Get()
   async getLotes(): Promise<Lotes[]> {
-    return await this.lotesService.findAll();
+    try {
+      return await this.lotesService.findAll();
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

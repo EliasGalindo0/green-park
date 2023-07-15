@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Lotes } from './lotes.entity';
 
 @Injectable()
@@ -9,19 +9,23 @@ export class LotesService {
   ) { }
 
   async create(loteInfo: Lotes): Promise<any> {
-    const { id, nome } = loteInfo;
-    return this.lotesRepository.create({
-      id,
-      nome,
-      ativo: true,
-    });
+    try {
+      const { id, nome } = loteInfo;
+      return this.lotesRepository.create({
+        id,
+        nome,
+        ativo: true,
+      });
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   async findAll(): Promise<Lotes[]> {
     try {
       return this.lotesRepository.findAll<Lotes>();
     } catch (error) {
-      throw new BadRequestException(error.message);
+      console.error(error);
     }
   }
 }
