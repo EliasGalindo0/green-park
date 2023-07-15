@@ -18,25 +18,32 @@ export class BoletosController {
 
   @Post()
   async create(@Body() boleto: Boletos): Promise<void> {
-    return await this.boletosService.create(boleto);
+    try {
+      return await this.boletosService.create(boleto);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadCSV(@UploadedFile() file: Express.Multer.File): Promise<void> {
-    return await this.boletosService.createFromCSV(file);
+    try {
+      return await this.boletosService.createFromCSV(file);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   @Post('upload-pdf')
   @UseInterceptors(FileInterceptor('pdf'))
   async uploadPDF(@UploadedFile() file: Express.Multer.File): Promise<void> {
-    return await this.boletosService.splitPDF(file);
+    try {
+      return await this.boletosService.splitPDF(file);
+    } catch (error) {
+      console.error(error);
+    }
   }
-
-  // @Get()
-  // async getAll(): Promise<Boletos[]> {
-  //   return await this.boletosService.findAll();
-  // }
 
   @Get()
   async getAllBoletos(

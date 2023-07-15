@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 
 import { Boletos } from './boletos.entity';
 import { Lotes } from 'src/lotes/lotes.entity';
@@ -22,28 +17,24 @@ export class BoletosService {
   ) { }
 
   async create(boleto: Boletos): Promise<any> {
-    const { nome_sacado, valor, id_lote, linha_digitavel, ativo } = boleto;
-    const lote = await this.lotesRepository.findByPk(id_lote);
-    if (!lote) {
-      throw new NotFoundException(`Lote with ID ${id_lote} not found`);
+    try {
+      const { nome_sacado, valor, id_lote, linha_digitavel, ativo } = boleto;
+      const lote = await this.lotesRepository.findByPk(id_lote);
+      if (!lote) {
+        throw new NotFoundException(`Lote with ID ${id_lote} not found`);
+      }
+
+      return await this.boletosRepository.create({
+        nome_sacado,
+        id_lote,
+        valor,
+        linha_digitavel,
+        ativo,
+      });
+    } catch (error) {
+      console.error(error);
     }
-
-    return await this.boletosRepository.create({
-      nome_sacado,
-      id_lote,
-      valor,
-      linha_digitavel,
-      ativo,
-    });
   }
-
-  // async findAll(): Promise<Boletos[]> {
-  //   try {
-  //     return await this.boletosRepository.findAll<Boletos>();
-  //   } catch (error) {
-  //     throw new BadRequestException(error.message);
-  //   }
-  // }
 
   async getAllBoletos(
     nome: string,
@@ -69,11 +60,10 @@ export class BoletosService {
       if (id_lote) {
         where['id_lote'] = id_lote;
       }
-      console.log(id_lote);
 
       return this.boletosRepository.findAll({ where });
     } catch (error) {
-      console.error(error.message);
+      console.error(error);
     }
   }
 
@@ -115,17 +105,13 @@ export class BoletosService {
               if (!novoIdLote) {
                 console.log(`Nome não mapeado: ${result.unidade}`);
               }
-              try {
-                await this.boletosRepository.create({
-                  nome_sacado: result.nome,
-                  id_lote: novoIdLote,
-                  valor: parseFloat(result.valor),
-                  linha_digitavel: result.linha_digitavel,
-                  ativo: true,
-                });
-              } catch (error) {
-                console.log(error.message);
-              }
+              await this.boletosRepository.create({
+                nome_sacado: result.nome,
+                id_lote: novoIdLote,
+                valor: parseFloat(result.valor),
+                linha_digitavel: result.linha_digitavel,
+                ativo: true,
+              });
             }
             resolve();
           })
@@ -134,7 +120,7 @@ export class BoletosService {
           });
       });
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   }
 
@@ -190,7 +176,7 @@ export class BoletosService {
 
       fs.unlinkSync(file.path);
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
   }
 }
