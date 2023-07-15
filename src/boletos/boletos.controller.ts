@@ -33,10 +33,10 @@ export class BoletosController {
     return await this.boletosService.splitPDF(file);
   }
 
-  @Get()
-  async getAll(): Promise<Boletos[]> {
-    return await this.boletosService.findAll();
-  }
+  // @Get()
+  // async getAll(): Promise<Boletos[]> {
+  //   return await this.boletosService.findAll();
+  // }
 
   @Get()
   async getAllBoletos(

@@ -37,13 +37,13 @@ export class BoletosService {
     });
   }
 
-  async findAll(): Promise<Boletos[]> {
-    try {
-      return await this.boletosRepository.findAll<Boletos>();
-    } catch (error) {
-      throw new BadRequestException(error.message);
-    }
-  }
+  // async findAll(): Promise<Boletos[]> {
+  //   try {
+  //     return await this.boletosRepository.findAll<Boletos>();
+  //   } catch (error) {
+  //     throw new BadRequestException(error.message);
+  //   }
+  // }
 
   async getAllBoletos(
     nome: string,
@@ -69,6 +69,7 @@ export class BoletosService {
       if (id_lote) {
         where['id_lote'] = id_lote;
       }
+      console.log(id_lote);
 
       return this.boletosRepository.findAll({ where });
     } catch (error) {
