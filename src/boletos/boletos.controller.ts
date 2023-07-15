@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -20,16 +21,41 @@ export class BoletosController {
     return await this.boletosService.create(boleto);
   }
 
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadCSV(@UploadedFile() file: Express.Multer.File): Promise<void> {
+    return await this.boletosService.createFromCSV(file);
+  }
+
+  @Post('upload-pdf')
+  @UseInterceptors(FileInterceptor('pdf'))
+  async uploadPDF(@UploadedFile() file: Express.Multer.File): Promise<void> {
+    return await this.boletosService.splitPDF(file);
+  }
+
   @Get()
   async getAll(): Promise<Boletos[]> {
     return await this.boletosService.findAll();
   }
 
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadCSV(@UploadedFile() file: Express.Multer.File): Promise<void> {
-    console.log(file);
-
-    return await this.boletosService.createFromCSV(file);
+  @Get()
+  async getAllBoletos(
+    @Query('nome') nome: string,
+    @Query('valor_inicial') valorInicial: number,
+    @Query('valor_final') valorFinal: number,
+    @Query('id_lote') id_lote: number,
+  ) {
+    try {
+      const boletos = await this.boletosService.getAllBoletos(
+        nome,
+        valorInicial,
+        valorFinal,
+        id_lote,
+      );
+      return boletos;
+    } catch (error) {
+      console.error(error);
+      throw new Error('Erro ao buscar boletos.');
+    }
   }
 }

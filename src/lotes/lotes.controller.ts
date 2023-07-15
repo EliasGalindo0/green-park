@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { LotesService } from './lotes.service';
 import { Lotes } from './lotes.entity';
 
@@ -8,8 +8,8 @@ export class LotesController {
   constructor(private readonly lotesService: LotesService) { }
 
   @Post()
-  async createLotes(): Promise<void> {
-    return await this.lotesService.create();
+  async createLotes(@Body() loteInfo: Lotes): Promise<void> {
+    return await this.lotesService.create(loteInfo);
   }
 
   @Get()
