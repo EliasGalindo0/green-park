@@ -51,6 +51,7 @@ export class BoletosController {
     @Query('valor_inicial') valorInicial: number,
     @Query('valor_final') valorFinal: number,
     @Query('id_lote') id_lote: number,
+    @Query('relatorio') relatorio: number,
   ) {
     try {
       const boletos = await this.boletosService.getAllBoletos(
@@ -58,6 +59,7 @@ export class BoletosController {
         valorInicial,
         valorFinal,
         id_lote,
+        relatorio,
       );
       return boletos;
     } catch (error) {

@@ -1,9 +1,8 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-
 import { Boletos } from './boletos.entity';
 import { Lotes } from 'src/lotes/lotes.entity';
-import { PDFDocument } from 'pdf-lib';
 import { Readable } from 'stream';
+import { PDFDocument } from 'pdf-lib';
 import * as csv from 'csv-parser';
 import * as fs from 'fs';
 
@@ -41,7 +40,8 @@ export class BoletosService {
     valorInicial: number,
     valorFinal: number,
     id_lote: number,
-  ): Promise<Boletos[]> {
+    relatorio: number,
+  ): Promise<Boletos[] | { base64: string }> {
     try {
       const where = {};
 
@@ -61,9 +61,63 @@ export class BoletosService {
         where['id_lote'] = id_lote;
       }
 
-      return this.boletosRepository.findAll({ where });
+      const allBoletos = await this.boletosRepository.findAll({ where });
+
+      if (relatorio === 1) {
+        const boletos = await this.boletosRepository.findAll();
+
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.addPage();
+
+        const tableWidth = 500;
+        const tableHeight = 300;
+        const tableX = (page.getWidth() - tableWidth) / 2;
+        const tableY = (page.getHeight() - tableHeight) / 2;
+
+        const font = await pdfDoc.embedFont('Helvetica');
+        const fontSize = 12;
+
+        const headerY = tableY + tableHeight - fontSize;
+        page.drawText('id', { x: tableX, y: headerY, font });
+        page.drawText('nome_sacado', { x: tableX + 60, y: headerY, font });
+        page.drawText('id_lote', { x: tableX + 160, y: headerY, font });
+        page.drawText('valor', { x: tableX + 260, y: headerY, font });
+        page.drawText('linha_digitavel', { x: tableX + 360, y: headerY, font });
+
+        let rowY = headerY - fontSize;
+        for (const boleto of boletos) {
+          rowY -= fontSize;
+          page.drawText(boleto.id.toString(), { x: tableX, y: rowY, font });
+          page.drawText(boleto.nome_sacado, { x: tableX + 60, y: rowY, font });
+          page.drawText(boleto.id_lote.toString(), {
+            x: tableX + 160,
+            y: rowY,
+            font,
+          });
+          page.drawText(boleto.valor.toString(), {
+            x: tableX + 260,
+            y: rowY,
+            font,
+          });
+          page.drawText(boleto.linha_digitavel, {
+            x: tableX + 360,
+            y: rowY,
+            font,
+          });
+        }
+        // Salve o PDF em um buffer
+        const pdfBytes = await pdfDoc.save();
+
+        // Converta o buffer para base64
+        const base64 = pdfBytes.toString();
+
+        return { base64 };
+      }
+
+      return allBoletos;
     } catch (error) {
       console.error(error);
+      throw new Error('Erro ao buscar boletos.');
     }
   }
 
