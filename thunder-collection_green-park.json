@@ -1,0 +1,192 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "green-park",
+    "dateExported": "2023-07-16T02:11:29.524Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "6983e640-36b1-42ac-8cb7-59f9c25c64f7",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/boletos/upload-pdf",
+            "url": "http://localhost:3000/boletos/upload-pdf",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-07-16T02:09:54.431Z",
+            "modified": "2023-07-16T02:09:54.431Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "file",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "file",
+                        "value": "/Users/eliasgalindo/Downloads/Boletos.csv",
+                        "isDisabled": true
+                    },
+                    {
+                        "name": "pdf",
+                        "value": "/Users/eliasgalindo/Downloads/boletos.pdf"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "e4600f82-0a7c-4844-8cd1-4d7ed24eafb8",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/boletos/upload",
+            "url": "http://localhost:3000/boletos/upload",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-07-16T02:10:08.450Z",
+            "modified": "2023-07-16T02:10:08.450Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [
+                    {
+                        "name": "file",
+                        "value": "",
+                        "isDisabled": true
+                    }
+                ],
+                "files": [
+                    {
+                        "name": "file",
+                        "value": "/Users/eliasgalindo/Downloads/Boletos.csv"
+                    }
+                ]
+            },
+            "tests": []
+        },
+        {
+            "_id": "7420d4e7-b0ef-4709-8940-1743c684b2d3",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/boletos",
+            "url": "http://localhost:3000/boletos",
+            "method": "POST",
+            "sortNum": 30000,
+            "created": "2023-07-16T02:10:20.308Z",
+            "modified": "2023-07-16T02:10:20.308Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "6bf442cf-2540-4fdd-933d-68dbda5184e4",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/lotes",
+            "url": "http://localhost:3000/lotes",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-07-16T02:10:29.476Z",
+            "modified": "2023-07-16T02:10:29.476Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "207c3d2f-6c5b-40b2-ad1a-b4a9bef213aa",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/lotes",
+            "url": "http://localhost:3000/lotes",
+            "method": "GET",
+            "sortNum": 50000,
+            "created": "2023-07-16T02:10:44.885Z",
+            "modified": "2023-07-16T02:10:44.885Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "bb4801df-ad44-460d-8bbd-c73cb3604d11",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/boletos",
+            "url": "http://localhost:3000/boletos",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-07-16T02:10:53.494Z",
+            "modified": "2023-07-16T02:10:53.494Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "5a962e0c-0883-46fb-8357-19f310d3ffe5",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/boletos?nome=JOSE DA SILVA&id_lote=3&valor_inicial=100&valor_final=200",
+            "url": "http://localhost:3000/boletos?nome=JOSE DA SILVA&id_lote=3&valor_inicial=100&valor_final=200",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-07-16T02:11:06.108Z",
+            "modified": "2023-07-16T02:11:06.108Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "nome",
+                    "value": "JOSE DA SILVA",
+                    "isPath": false
+                },
+                {
+                    "name": "id_lote",
+                    "value": "3",
+                    "isPath": false
+                },
+                {
+                    "name": "valor_inicial",
+                    "value": "100",
+                    "isPath": false
+                },
+                {
+                    "name": "valor_final",
+                    "value": "200",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "9942df69-a901-44ea-8bd7-14910b2aafb0",
+            "colId": "64417a27-baae-4e54-9788-3d226de82171",
+            "containerId": "",
+            "name": "http://localhost:3000/boletos",
+            "url": "http://localhost:3000/boletos/upload",
+            "method": "POST",
+            "sortNum": 80000,
+            "created": "2023-07-16T02:11:17.467Z",
+            "modified": "2023-07-16T02:11:17.467Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "formdata",
+                "raw": "",
+                "form": [],
+                "files": [
+                    {
+                        "name": "file",
+                        "value": "/Users/eliasgalindo/Downloads/Boletos.csv"
+                    }
+                ]
+            },
+            "tests": []
+        }
+    ]
+}
